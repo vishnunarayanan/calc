@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+
+  <link rel="stylesheet" type="text/css" href="calc.css">
+</head>
+<body>
+
+  <div id="calc-container">
+    <div id="calc-screen">
+      <span></span>
+    </div>
+    
+    <div id="calc-input">
+     
+      <!-- top row -->
+      <div class="calc-numbers-row">
+        <div class="calc-number">
+          <span>(</span>
+        </div>
+        
+        <div class="calc-number">
+          <span>)</span>
+        </div>
+
+        <div class="calc-number">
+          <span>space</span>
+        </div>
+        
+        <div class="calc-number">
+          <span>Clear</span>
+        </div>
+      </div>
+      
+      <!-- 7,8,9 -->
+      <div class="calc-numbers-row">
+        <div class="calc-number">
+          <span>7</span>
+        </div>
+        <div class="calc-number">
+          <span>8</span>
+        </div>
+        <div class="calc-number">
+          <span>9</span>
+        </div>
+        <div class="calc-number">
+          <span>÷</span>
+        </div>
+      </div>
+      
+      <!-- 4,5,6 -->
+      <div class="calc-numbers-row">
+        <div class="calc-number">
+          <span>4</span>
+        </div>
+        <div class="calc-number">
+          <span>5</span>
+        </div>
+        <div class="calc-number">
+          <span>6</span>
+        </div>
+        <div class="calc-number">
+          <span>x</span>
+        </div>
+      </div>
+      
+      <!-- 1,2,3 -->
+      <div class="calc-numbers-row">
+        <div class="calc-number">
+          <span>1</span>
+        </div>
+        <div class="calc-number">
+          <span>2</span>
+        </div>
+        <div class="calc-number">
+          <span>3</span>
+        </div>
+        <div class="calc-number">
+          <span>-</span>
+        </div>
+      </div>
+      
+      <!-- bottom row -->
+      <div class="calc-numbers-row">
+        <div class="calc-number">
+          <span>0</span>
+        </div>
+        <div class="calc-number">
+          <span>.</span>
+        </div>
+        <div class="calc-number">
+          <span>=</span>
+        </div>
+        <div class="calc-number">
+          <span>+</span>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+      
+  <script src="./view.js"></script>
+  <script src="./events.js"></script>
+  <script src="./controller.js"></script>
+  <script src="./model.js"></script>
+  <script>
+
+  $(function(){
+
+  var model = new CalcModel("(+ 1 (+ 2 (+ 3 (+ 4 5))))");
+
+  var view = new CalcView(model, {
+      buttons: $('#calc-input'),
+      screen : $('#calc-screen span')
+    });
+
+  var controller = new CalcController(model, view);
+
+  view.show();
+  });
+
+  </script>    
+  
+</body>
+</html>
