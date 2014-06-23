@@ -22,3 +22,9 @@ If you wanted to add the numbers 1 through 5, you could type:
     (+ 1 (+ 2 (+ 3 (+ 4 5))))
 
 Your program should accept integers and decimals.
+
+##Running the program
+calc.html
+
+##Testing
+test\test.html
