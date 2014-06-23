@@ -6,10 +6,12 @@ function CalcModel(expr) {
 
 
     // evaluate expression
-    function evaluate(str){
+    function evaluate(){
+        var str = this.expr;
         var stack = [];
         var char;
         var expectNumber = false;
+        var temp;
         for(var i in str){
             char = str[i];
             
@@ -29,10 +31,23 @@ function CalcModel(expr) {
                 stack.push(num);                
                 expectNumber = true;
             }
-            
+
             // space
             if(isNaN(num))
                 expectNumber = false;
+
+            // floating
+            if(char === '.'){
+                temp = stack.pop() +"";
+
+                if(temp.indexOf(".") >=0)
+                    throw new Error("invalid");
+
+                temp = temp + char;
+
+                stack.push(temp);
+                expectNumber = true;
+            }
                 
             // ) means compute
             if(char === ')'){
@@ -94,8 +109,40 @@ function processStack(stack){
         stack.push(total);
     }
 
+function validateBraces(){
+    var str = this.expr;
+    var openBraceCount = 0;
+    var closeBraceCount = 0;
+    for(var i in str){
+        if(str[i] === '(')
+            openBraceCount ++;
+
+        if(str[i] === ')')
+            closeBraceCount++;
+    }
+
+    if(openBraceCount === closeBraceCount)
+        return true;
+    else
+        return false;
+
+}
+
     this.evaluate = function(){
-        var result = evaluate(this.expr);
+        var result;
+
+        try{
+            if(validateBraces.call(this))
+                result = evaluate.call(this);
+            else
+                throw new Error("invalid");
+        }
+        catch(e){
+            this.exprAppended.notify({expr : "invalid expression. Clear to continue"});
+            return e.message;
+        }
+
+
         // error handling
         if(result.length === 1){
             result = result.join("");
@@ -104,6 +151,8 @@ function processStack(stack){
         else{
             this.exprAppended.notify({expr : "invalid expression. Clear to continue"});
         }
+
+        return result;
     }
 }
 
